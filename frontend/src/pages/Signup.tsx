@@ -2,6 +2,7 @@ import React from "react";
 import Textbox from "../components/Textbox";
 import Emailbox from "../components/Emailbox";
 import Passwordbox from "../components/Password";
+import Buttons from "../components/Buttons";
 
 export default function Signup() {
   return (
@@ -15,11 +16,7 @@ export default function Signup() {
           <Emailbox name="emailSignup" id="emailSignup" labelContent="Email" />
           <Textbox name="uName" id="uName" labelContent="Username"/>
           <Passwordbox id="pwdSignup" name="pwdSignup" labelContent="Password"/>
-          <input
-            type="submit"
-            value="Sign up"
-            className="px-4 py-1 bg-blue-700 text-white rounded-lg hover:bg-blue-800 mt-3 w-[150px] hover:cursor-pointer"
-          />
+          <Buttons buttonText="Sign up" buttonName="signup" buttonsId="signup"/>
         </form>
       </div>
     </div>
