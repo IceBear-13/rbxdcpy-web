@@ -1,5 +1,6 @@
 import db from "../config/db";
 import dotenv from "dotenv";
+import supabaseAdmin from "../config/supabaseAdmin";
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ export const register = async (email: string, username: string, password: string
 
     if(authError) throw authError;
 
-    const { data: profileData, error: profileError } = await db
+    const { data: profileData, error: profileError } = await supabaseAdmin
       .from('profiles')
       .insert([
         {
@@ -27,8 +28,10 @@ export const register = async (email: string, username: string, password: string
       }
       throw profileError;
     }
-    
-    return { user: authData.user, profile: profileData };
+
+    console.log(authData.user?.id);
+
+    return { user: authData.user };
   } catch (error) {
     console.error('Registration error:', error);
     throw error;
