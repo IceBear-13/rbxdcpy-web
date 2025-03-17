@@ -18,7 +18,8 @@ export const register = async (email: string, username: string, password: string
       .insert([
         {
           id: authData.user!.id,
-          username
+          username,
+          email: email
         }
       ])
 
@@ -56,4 +57,36 @@ export const loginWithEmail = async (email: string, password: string) => {
     throw error;
   }
 
+}
+
+export const loginWithUsername = async (username: string, password: string) => {
+  try{
+    const { data: profileData, error: profileError } = await supabaseAdmin
+      .from('profiles')
+      .select('email')
+      .eq('username', username);
+
+    if (!profileData || profileData.length === 0) {
+      throw new Error('User not found');
+    }
+
+    const email = profileData[0].email;
+       
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    return {
+      user: data.user,
+      session: data.session
+    };
+
+
+  } catch(error){
+    console.error('Login error:', error);
+    throw error;
+  }
 }

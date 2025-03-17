@@ -1,6 +1,10 @@
 import app from "../app";
 import { Router, Request, Response } from "express";
-import { register, loginWithEmail } from "../services/authService";
+import {
+  register,
+  loginWithEmail,
+  loginWithUsername,
+} from "../services/authService";
 
 const router = Router();
 
@@ -29,17 +33,17 @@ const router = Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/register', async (req: Request, res: Response) => {
-  try{
+router.post("/register", async (req: Request, res: Response) => {
+  try {
     const { email, username, password } = req.body;
     const data = await register(email, username, password);
 
     res.json(data);
-  } catch(error){
-    res.status(500).send('Internal Server Error');
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
     console.error(error);
   }
-})
+});
 
 /**
  * @swagger
@@ -64,20 +68,28 @@ router.post('/register', async (req: Request, res: Response) => {
  *       500:
  *         description: Internal server error
  */
-router.post('/signin', async (req: Request, res: Response) => {
-    try{
-        const {email, password} = req.body;
-        const { user, session } = await loginWithEmail(email, password);
-        
-        res.json({
-            user: user,
-            session: session,
-        });
+router.post("/signin", async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const isEmail = email.includes("@");
 
-    } catch(error){
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+    if (isEmail) {
+      const { user, session } = await loginWithEmail(email, password);
+      res.json({
+        user: user,
+        session: session,
+      });
+    } else {
+      const { user, session } = await loginWithUsername(email, password);
+      res.json({
+        user: user,
+        session: session,
+      });
     }
-})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 export default router;
