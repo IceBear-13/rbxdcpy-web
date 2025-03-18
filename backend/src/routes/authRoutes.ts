@@ -4,8 +4,10 @@ import {
   register,
   loginWithEmail,
   loginWithUsername,
+  createProfile,
 } from "../services/authService";
 import db from "../config/db";
+import axios from "axios";
 
 const router = Router();
 
@@ -36,15 +38,20 @@ const router = Router();
  */
 router.post("/register", async (req: Request, res: Response) => {
   try {
+    const newUserID = crypto.randomUUID();
     const { email, username, password } = req.body;
-    const data = await register(email, username, password);
-
-    res.json(data);
+    const data = await register(newUserID, email, username, password);
+    const profile = await  createProfile(newUserID, email, username);
+    
+    res.status(200).json({data: data, profile: profile});
   } catch (error) {
     res.status(500).send("Internal Server Error");
     console.error(error);
   }
 });
+
+// Define the router with consistent naming
+
 
 /**
  * @swagger
@@ -75,17 +82,11 @@ router.post("/signin", async (req: Request, res: Response) => {
     const isEmail = email.includes("@");
 
     if (isEmail) {
-      const { user, session } = await loginWithEmail(email, password);
-      res.json({
-        user: user,
-        session: session,
-      });
+      const data = await loginWithEmail(email, password);
+      res.json(data);
     } else {
-      const { user, session } = await loginWithUsername(email, password);
-      res.json({
-        user: user,
-        session: session,
-      });
+      const data = await loginWithUsername(email, password);
+      res.json(data);
     }
   } catch (error) {
     console.error(error);
@@ -127,6 +128,9 @@ router.get('/discord', async (req: Request, res: Response) => {
 })
 
 router.get('/discord/callback', async (req: Request, res: Response) => {
+  const { searchParams, origin } = new URL(req.url);
+  const code = searchParams.get('code');
+  const next = searchParams.get('next') ?? '/';
   
 })
 
