@@ -5,6 +5,7 @@ import {
   loginWithEmail,
   loginWithUsername,
 } from "../services/authService";
+import db from "../config/db";
 
 const router = Router();
 
@@ -91,5 +92,44 @@ router.post("/signin", async (req: Request, res: Response) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+/**
+ * @swagger
+ * /discord:
+ *   get:
+ *     summary: Sign in a user
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: User signed in successfully
+ *       500:
+ *         description: Internal server error
+ */
+
+router.get('/discord', async (req: Request, res: Response) => {
+  try{
+    const discordRedirectURL = process.env.DISCORD_REDIRECT_URL as string;
+    const{ data, error } = await db.auth.signInWithOAuth({
+      provider: 'discord',
+      options: {
+        redirectTo: discordRedirectURL,
+      }
+    })
+    
+    if (error) throw error;
+
+    res.redirect(discordRedirectURL);
+
+  } catch(error){
+    res.status(500).send('Discord login error: ');
+    console.error(error);
+  }
+})
+
+router.get('/discord/callback', async (req: Request, res: Response) => {
+  
+})
+
+
 
 export default router;

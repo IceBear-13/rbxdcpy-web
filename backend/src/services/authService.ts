@@ -90,3 +90,14 @@ export const loginWithUsername = async (username: string, password: string) => {
     throw error;
   }
 }
+
+
+export const loginWithDiscord = async () => {
+  const discordRedirectURL = process.env.DISCORD_REDIRECT_URL as string;
+  const { data, error } = await db.auth.signInWithOAuth({
+    provider: 'discord',
+    options: {
+      redirectTo: discordRedirectURL,
+    }
+  })
+}

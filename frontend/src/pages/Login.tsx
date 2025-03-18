@@ -4,6 +4,11 @@ import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
 
 export default function Login() {
+
+  const loginWithDiscord = () => {
+    window.location.href = 'http://localhost:3000/auth/discord';
+  }
+
   return (
     <div className="w-full h-screen flex py-[5%] px-[10%]">
       <div className="w-full h-full m-auto rounded-lg flex justify-between space-x-10 p-5 border border-gray-200 shadow-xl">
@@ -39,12 +44,12 @@ export default function Login() {
                   Alternatively sign in with:
                 </div>
                 <li>
-                  <button className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105">
+                  <a className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105" href="http://localhost:3000/auth/discord">
                     <img
                       src="discord-logo-512x512.svg"
                       className="size-[30px]"
                     />
-                  </button>
+                  </a>
                 </li>
                 <li>
                   <button className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105">
