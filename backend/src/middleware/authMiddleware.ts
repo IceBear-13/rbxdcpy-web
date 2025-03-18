@@ -1,24 +1,40 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY as string;
 
 export const hashPassword = async (plainPassword: string) => {
-    const saltRound = 10;
-    const hashedPassword = await bcrypt.hash(plainPassword, saltRound);
-    return hashedPassword;
+    try{
+        const saltRound = 10;
+        const hashedPassword = await bcrypt.hash(plainPassword, saltRound);
+        return hashedPassword;
+    } catch(error){
+        console.error(error);
+        throw error;
+    }
 }
 
 export const verifyPassword = async (plainPassword: string, hashedPassword: string) => {
-    const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
-    return isMatch;
+    try{
+        const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
+        return isMatch;
+    } catch(error){
+        console.error(error);
+        throw error;
+    }
+
 }
 
-async function example() {
-    const password = "user-password";
-    const hashed = await hashPassword(password);
-    console.log("Hashed:", hashed);
-    
-    // Later when verifying
-    const isValid = await verifyPassword(password, hashed);
-    console.log("Password valid:", isValid);
+export const verifyToken = async (token: string) => {
+    try{
+        const verified = jwt.verify(token, JWT_SECRET_KEY);
+        return verified
+    } catch(error){
+        console.error(error);
+        throw error;
+    }
 }
-  
-// example();
+
