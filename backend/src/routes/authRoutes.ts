@@ -94,6 +94,15 @@ router.post("/register", async (req: Request, res: Response) => {
   }
 });
 
+router.post('/logout', async (req: Request, res: Response) => {
+  try{
+    res.clearCookie('token', COOKIE_OPTIONS);
+    res.status(200).json({logout: 'success'});
+  } catch(error){
+    throw error;
+  }
+})
+
 // Define the router with consistent naming
 
 /**
