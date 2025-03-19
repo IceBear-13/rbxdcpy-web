@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { NextFunction, Request, Response } from 'express';
 
 dotenv.config();
 
@@ -28,13 +29,27 @@ export const verifyPassword = async (plainPassword: string, hashedPassword: stri
 
 }
 
-export const verifyToken = async (token: string) => {
-    try{
-        const verified = jwt.verify(token, JWT_SECRET_KEY);
-        return verified
-    } catch(error){
-        console.error(error);
-        throw error;
-    }
-}
+interface AuthRequest extends Request {
+    user?: any;
+  }
+  
 
+export const authToken = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if(!token) return res.sendStatus(401).json({
+    success: false,
+    message: 'Access denied, authentication required.'
+  });
+
+  try{
+    const decoded = jwt.verify(token, JWT_SECRET_KEY);
+    req.user = decoded;
+    next();
+  } catch(error){
+    console.error(error);
+    throw error;
+  }
+
+  
+}

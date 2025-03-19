@@ -4,6 +4,7 @@ import supabaseAdmin from "../config/supabaseAdmin";
 import { hashPassword, verifyPassword } from "../middleware/authMiddleware";
 import crypto from "crypto";
 import jwt from "jsonwebtoken"
+import { Request, Response } from "express";
 // import { validateEmail, validateUsername, validatePassword } from "../utils/validation"; // Assume these validation functions exist
 
 dotenv.config();
@@ -165,12 +166,7 @@ export const loginWithUsername = async (username: string, password: string) => {
 }
 
 
-export const loginWithDiscord = async () => {
+export const loginWithDiscord = async (req: Request, res: Response) => {
   const discordRedirectURL = process.env.DISCORD_REDIRECT_URL as string;
-  const { data, error } = await db.auth.signInWithOAuth({
-    provider: 'discord',
-    options: {
-      redirectTo: discordRedirectURL,
-    }
-  })
+  return res.redirect(discordRedirectURL);
 }

@@ -5,11 +5,16 @@ import {
   loginWithEmail,
   loginWithUsername,
   createProfile,
+  loginWithDiscord,
 } from "../services/authService";
 import db from "../config/db";
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const router = Router();
+const DISCORD_REDIRECT_URL = process.env.DISCORD_REDIRECT_URL as string;
 
 /**
  * @swagger
@@ -109,18 +114,8 @@ router.post("/signin", async (req: Request, res: Response) => {
 
 router.get('/discord', async (req: Request, res: Response) => {
   try{
-    const discordRedirectURL = process.env.DISCORD_REDIRECT_URL as string;
-    const{ data, error } = await db.auth.signInWithOAuth({
-      provider: 'discord',
-      options: {
-        redirectTo: discordRedirectURL,
-      }
-    })
-    
-    if (error) throw error;
-
+    const discordRedirectURL = DISCORD_REDIRECT_URL;
     res.redirect(discordRedirectURL);
-
   } catch(error){
     res.status(500).send('Discord login error: ');
     console.error(error);
