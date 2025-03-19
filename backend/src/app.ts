@@ -5,13 +5,19 @@ import { register, loginWithEmail } from "./services/authService";
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import router from "./routes";
-
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Specify allowed origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 const swaggerOptions: swaggerJsDoc.Options = {
     swaggerDefinition: {
