@@ -31,7 +31,18 @@ const COOKIE_OPTIONS = {
 };
 
 
-
+/**
+ * @swagger
+ * /verify-auth:
+ *   get:
+ *     summary: Verify the validity of a user's token
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: User verified successfully
+ *       401:
+ *         description: User is not verified
+ */
 router.get('/verify-auth', (req: Request, res: Response) =>{
   const token = req.cookies.token;
   // console.log(token);
