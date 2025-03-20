@@ -258,4 +258,8 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
   }
 });
 
+router.post('/google', (req: Request, res: Response) => {
+
+})
+
 export default router;
