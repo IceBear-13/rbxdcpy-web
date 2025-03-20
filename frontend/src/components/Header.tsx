@@ -34,7 +34,7 @@ export const Header = () => {
             <div>
                 <ul className="flex items-center space-x-3">
                     <li className="text-white">Username</li>
-                    <li><img src="avatar-default.svg" className="w-[45px] bg-gray-200 rounded-full p-2"/></li>
+                    <li><img src="avatar-default.svg" className="w-[45px] rounded-full"/></li>
                 </ul>
             </div>
         </header>

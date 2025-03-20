@@ -1,12 +1,17 @@
 import React from "react";
 import { Header } from "../components/Header";
+import { ProfileSidebar } from "../components/ProfileSidebar";
+import { ProfileDashboard } from "../components/ProfileDashboard";
 
 export const Profile = () => {
     return(
-        <div className="">
+        <div className="h-screen">
             <Header />
-            <div className="pt-[100px] px-[4px]">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic vitae consequuntur consectetur quas harum deserunt amet laboriosam facere nam exercitationem eligendi, quia, eos, enim iusto atque ea deleniti sequi soluta?
+            <div className="pt-[100px] h-full flex">
+              <ProfileSidebar />
+              <div className="w-full md:w-[80%] p-2">
+                <ProfileDashboard />
+              </div>
             </div>
         </div>
     )

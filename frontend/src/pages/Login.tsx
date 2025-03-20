@@ -39,6 +39,7 @@ export default function Login() {
               name="uNameLogin"
               id="uNameLogin"
               labelContent="Username or email"
+              placeholder="Enter your username"
             />
             <Passwordbox id="pwdLogin" name="pwdLogin" labelContent="Password" />
             <div className="mb-5">
