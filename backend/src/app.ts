@@ -6,6 +6,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import router from "./routes";
 import cookieParser from "cookie-parser";
+import { authToken } from "./middleware/authMiddleware";
 
 dotenv.config();
 

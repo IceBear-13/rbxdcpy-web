@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 
-interface Passwordbox {
-  id: string,
-  labelContent: string,
-  name: string,
-  placeholder?: string, // Optional placeholder prop
-};
+interface PasswordboxProps {
+  id: string;
+  labelContent: string;
+  name: string;
+  placeholder?: string; // Optional placeholder prop
+  value?: string; // Add value prop to control the input
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange handler
+}
 
-export default function Passwordbox({ id, labelContent, name, placeholder = "Enter your password" }: Passwordbox) {
+export default function Passwordbox({
+  id,
+  labelContent,
+  name,
+  placeholder = "Enter your password",
+  value,
+  onChange
+}: PasswordboxProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState("");
+  const [internalValue, setInternalValue] = useState(""); // Internal state for uncontrolled mode
   const [showPassword, setShowPassword] = useState(false);
   
   const handleFocus = () => {
@@ -21,12 +30,21 @@ export default function Passwordbox({ id, labelContent, name, placeholder = "Ent
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    // If parent provided onChange handler, call it
+    if (onChange) {
+      onChange(e);
+    } else {
+      // Otherwise use internal state
+      setInternalValue(e.target.value);
+    }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // Use either controlled value from props or internal state
+  const inputValue = value !== undefined ? value : internalValue;
 
   return (
     <div className="mb-3">
@@ -38,14 +56,14 @@ export default function Passwordbox({ id, labelContent, name, placeholder = "Ent
           id={id}
           className="w-full border-b-1 pr-10 focus:outline-none text-[20px]"
           placeholder={isFocused ? "" : placeholder}
-          value={value}
+          value={inputValue}
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
         <button
           type="button"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700  focus:outline-none"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
           onClick={togglePasswordVisibility}
           aria-label={showPassword ? "Hide password" : "Show password"}
         >

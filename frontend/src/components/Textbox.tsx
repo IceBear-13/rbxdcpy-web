@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 
 interface TextboxInput {
-  id: string,
-  labelContent: string,
-  name: string,
-  placeholder?: string, // Optional placeholder prop
-};
+  id: string;
+  labelContent: string;
+  name: string;
+  placeholder?: string; // Optional placeholder prop
+  value?: string; // Add value prop to control the input
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange handler
+}
 
-export default function Textbox({ id, labelContent, name, placeholder="placeholder" }: TextboxInput) {
+export default function Textbox({
+  id,
+  labelContent,
+  name,
+  placeholder = "placeholder",
+  value,
+  onChange
+}: TextboxInput) {
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState("");
+  
+  // Only use internal state if value prop is not provided (uncontrolled component)
+  const [internalValue, setInternalValue] = useState("");
   
   const handleFocus = () => {
     setIsFocused(true);
@@ -20,19 +31,28 @@ export default function Textbox({ id, labelContent, name, placeholder="placehold
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    // If parent provided onChange handler, call it
+    if (onChange) {
+      onChange(e);
+    } else {
+      // Otherwise use internal state
+      setInternalValue(e.target.value);
+    }
   };
+  
+  // Use either controlled value from props or internal state
+  const inputValue = value !== undefined ? value : internalValue;
   
   return (
     <div> 
-      <label htmlFor={name} className="text-[18px] ">{labelContent}</label>
+      <label htmlFor={name} className="text-[18px]">{labelContent}</label>
       <input
         type="text"
         name={name}
         id={id}
         className="w-full border-b-1 mb-3 focus:outline-none text-[20px]"
         placeholder={isFocused ? "" : placeholder}
-        value={value}
+        value={inputValue}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}

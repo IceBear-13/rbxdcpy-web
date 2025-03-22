@@ -48,8 +48,9 @@ router.get('/verify-auth', (req: Request, res: Response) =>{
   // console.log(token);
   if(!token) res.status(401).json({authenticated: false});
   try{
-    jwt.verify(token, JWT_SECRET_KEY);
-    res.status(200).json({authenticated: true});
+    const user = jwt.verify(token, JWT_SECRET_KEY);
+    res.status(200).json({authenticated: true, user: user});
+    // console.log(user);
   } catch(error){
     res.status(401).json({authenticated: false});
     throw error;
@@ -96,12 +97,20 @@ router.post("/register", async (req: Request, res: Response) => {
 
 router.post('/logout', async (req: Request, res: Response) => {
   try{
-    res.clearCookie('token', COOKIE_OPTIONS);
+    const { maxAge, ...cookieOptionsForClearing } = COOKIE_OPTIONS
+    res.clearCookie('token', cookieOptionsForClearing);
     res.status(200).json({logout: 'success'});
   } catch(error){
     throw error;
   }
 })
+
+router.get('/check-cookies', (req: Request, res: Response) => {
+  res.status(200).json({
+    cookies: req.cookies,
+    hasCookie: !!req.cookies.token
+  });
+});
 
 // Define the router with consistent naming
 
@@ -248,8 +257,6 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
     };
     const token = await jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "24h" });
     res.cookie("token", token, COOKIE_OPTIONS);
-    
-    // Choose one response method, redirect is usually better for OAuth flows
     res.redirect(`${FRONTEND_URL}/test`);
   } catch (error) {
     console.error("Error: ", error);
@@ -258,8 +265,5 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
   }
 });
 
-router.post('/google', (req: Request, res: Response) => {
-
-})
 
 export default router;
