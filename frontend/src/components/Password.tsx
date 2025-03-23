@@ -6,7 +6,8 @@ interface PasswordboxProps {
   name: string;
   placeholder?: string; // Optional placeholder prop
   value?: string; // Add value prop to control the input
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange handler
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export default function Passwordbox({
@@ -15,7 +16,8 @@ export default function Passwordbox({
   name,
   placeholder = "Enter your password",
   value,
-  onChange
+  onChange,
+  onKeyDown
 }: PasswordboxProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [internalValue, setInternalValue] = useState(""); // Internal state for uncontrolled mode
@@ -60,6 +62,7 @@ export default function Passwordbox({
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onKeyDown={onKeyDown}
         />
         <button
           type="button"

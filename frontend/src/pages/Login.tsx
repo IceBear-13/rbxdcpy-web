@@ -12,6 +12,7 @@ export default function Login() {
 
   useEffect(()=>{
     const verify = async () => {
+      console.log('verify called once')
       try{
         const response = await fetch("http://localhost:3000/auth/verify-auth", {credentials: 'include'});
         if(response.ok){
@@ -24,7 +25,9 @@ export default function Login() {
       }
 
     };
-    verify();
+    if(sessionStorage.getItem('isVerified')){
+      verify();
+    }
   }, [])
 
 
@@ -51,6 +54,14 @@ export default function Login() {
       sessionStorage.setItem('isVerified', 'true');
       sessionStorage.setItem('userID', userData.user.userId)
       window.location.href = '/test';
+    } else{
+      alert('Incorrect username or password');
+    }
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if(e.key === 'Enter'){
+      handleSignin();
     }
   }
 
@@ -71,8 +82,9 @@ export default function Login() {
               id="uNameLogin"
               labelContent="Username or email"
               placeholder="Enter your username"
+              onKeyDown={handleKeyPress}
             />
-            <Passwordbox id="pwdLogin" name="pwdLogin" labelContent="Password" />
+            <Passwordbox id="pwdLogin" name="pwdLogin" labelContent="Password" onKeyDown={handleKeyPress} />
             <div className="mb-5">
               <input type="checkbox" id="rememberMe" name="rememberMe" />
               <label htmlFor="rememberMe" className="ml-2 text-[18px]">

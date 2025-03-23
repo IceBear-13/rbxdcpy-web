@@ -10,13 +10,13 @@ export default function Signup() {
         <div className="w-[45%] lg:flex items-center justify-center hidden">
           <img src="thisartwork.jpg" className="w-full h-full object-cover rounded-lg hover:scale-102 transform duration-300" />
         </div>
-        <form className="px-2 w-[45%] flex flex-col flex-grow h-full overflow-scroll">
+        <div className="px-2 w-[45%] flex flex-col flex-grow h-full overflow-scroll">
           <h1 className="mb-4 mt-1 text-md font-bold">Create a new account</h1>
           <Textbox name="emailSignup" id="emailSignup" labelContent="Email" placeholder="Enter your email" />
           <Textbox name="uName" id="uName" labelContent="Username" placeholder="Enter your username"/>
           <Passwordbox id="pwdSignup" name="pwdSignup" labelContent="Password" placeholder="Enter your password"/>
           <Buttons buttonText="Sign up" buttonName="signup" buttonsId="signup"/>
-        </form>
+        </div>
       </div>
     </div>
   );

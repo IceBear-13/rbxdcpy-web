@@ -7,16 +7,23 @@ export default function Test(){
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const verify = async() => {
-      if(sessionStorage.getItem('isVerified') === 'true'){
-        setIsVerified(true);
-      } 
-      setIsLoading(false);
+  useEffect(()=>{
+    console.log('Login component mounted, verifying auth');
+    const verify = async () => {
+      try{
+        const response = await fetch("http://localhost:3000/auth/verify-auth", {credentials: 'include'});
+        if(response.ok){
+          setIsVerified(true);
+          sessionStorage.setItem('isVerified', 'true');
+          setIsLoading(false);
+        }
+      } catch(error){
+        console.error(error);
+        setIsVerified(false);
+      }
     };
-    
     verify();
-  }, []);
+  }, [])
 
   const logout = async () => {
     try{

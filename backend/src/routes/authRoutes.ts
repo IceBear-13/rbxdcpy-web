@@ -44,6 +44,7 @@ const COOKIE_OPTIONS = {
  *         description: User is not verified
  */
 router.get('/verify-auth', (req: Request, res: Response) =>{
+  console.log('requested once');
   const token = req.cookies.token;
   // console.log(token);
   if(!token) res.status(401).json({authenticated: false});

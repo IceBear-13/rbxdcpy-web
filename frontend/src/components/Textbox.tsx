@@ -7,6 +7,7 @@ interface TextboxInput {
   placeholder?: string; // Optional placeholder prop
   value?: string; // Add value prop to control the input
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange handler
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export default function Textbox({
@@ -15,7 +16,8 @@ export default function Textbox({
   name,
   placeholder = "placeholder",
   value,
-  onChange
+  onChange,
+  onKeyDown
 }: TextboxInput) {
   const [isFocused, setIsFocused] = useState(false);
   
@@ -56,6 +58,7 @@ export default function Textbox({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={onKeyDown}
       />
     </div> 
   );
