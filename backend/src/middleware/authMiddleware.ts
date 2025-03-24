@@ -29,18 +29,21 @@ export const verifyPassword = async (plainPassword: string, hashedPassword: stri
 
 }
 
-interface AuthRequest extends Request {
+export interface AuthRequest extends Request {
     user?: any;
-  }
+}
   
 
 export const authToken = async (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  if(!token) return res.sendStatus(401).json({
-    success: false,
-    message: 'Access denied, authentication required.'
-  });
+  if(!token) {
+    res.sendStatus(401).json({
+      success: false,
+      message: 'Access denied, authentication required.'
+    })
+    return;
+  }
 
   try{
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
