@@ -44,16 +44,16 @@ const COOKIE_OPTIONS = {
  *         description: User is not verified
  */
 router.get('/verify-auth', (req: Request, res: Response) =>{
-  console.log('requested once');
+  // console.log('requested once');
   const token = req.cookies.token;
   // console.log(token);
-  if(!token) res.status(401).json({authenticated: false});
+  if(!token || token === '') res.status(401);
   try{
     const user = jwt.verify(token, JWT_SECRET_KEY);
     res.status(200).json({authenticated: true, user: user});
     // console.log(user);
   } catch(error){
-    res.status(401).json({authenticated: false});
+    res.status(401);
     throw error;
   }
 })
@@ -89,7 +89,15 @@ router.post("/register", async (req: Request, res: Response) => {
     const data = await register(newUserID, email, username, password);
     const profile = await createProfile(newUserID, email, username);
 
-    res.status(200).json({ data: data, profile: profile });
+    const payload = {
+      sub: newUserID,
+      username: username,
+      email: email,
+    }
+    const token = jwt.sign(payload, JWT_SECRET_KEY);
+
+    res.cookie("token", token);
+    res.status(200).json({ data: data, profile: profile, token: token});
   } catch (error) {
     res.status(500).send("Internal Server Error");
     console.error(error);
