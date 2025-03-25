@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { AuthRequest, authToken, verifyPassword } from "../middleware/authMiddleware";
 import db from "../config/db";
 import supabaseAdmin from "../config/supabaseAdmin";
+import { uploadMiddleware } from "../middleware/uploadMiddleware";
 
 const router = Router();
 
@@ -78,6 +79,31 @@ router.post("/change-profile", authToken, async (req: AuthRequest, res: Response
   } catch(error){
     throw error;
   }
+})
+
+router.post("/change-avatar", authToken, async (req: AuthRequest, res: Response) => {
+  uploadMiddleware(req, res, async (err) => {
+    if(err){
+      res.status(500).json({
+        success: "false",
+        message: err.message,
+      })
+    }
+
+    try{
+      const userID = req.user?.userId;
+      if(!userID){
+        res.status(401).json({
+          success: false,
+          message: 'User not authenticated'
+        })
+        throw new Error('Not authenticated');
+      }
+      
+    } catch(error){
+      console.error(error);
+    }
+  })
 })
 
 
