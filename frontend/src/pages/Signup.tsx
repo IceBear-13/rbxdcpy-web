@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Textbox from "../components/Textbox";
 import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
+import { BACKEND_URL } from "./Login";
 
 export default function Signup() {
   const [isVerified, setIsVerified] = useState(false);
@@ -9,7 +10,7 @@ export default function Signup() {
   useEffect(() => {
     const verify = async () => {
       try{
-        const response = await fetch("https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/verify-auth", {credentials: 'include'});
+        const response = await fetch(`${BACKEND_URL}auth/verify-auth`, {credentials: 'include'});
         if(response.ok){
           setIsVerified(true);
         } else{
@@ -29,7 +30,7 @@ export default function Signup() {
     const username = (document.getElementById('uName') as HTMLInputElement)?.value;
     const email = (document.getElementById('emailSignup') as HTMLInputElement)?.value;
 
-    const response = await fetch("https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/register", {
+    const response = await fetch(`${BACKEND_URL}auth/register`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
