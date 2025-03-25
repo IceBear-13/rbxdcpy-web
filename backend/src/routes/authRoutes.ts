@@ -270,7 +270,7 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error: ", error);
     // Provide an error response to the client
-    res.status(500).json({ error: "Authentication failed" });
+    res.status(500).json({ error: error});
   }
 });
 
