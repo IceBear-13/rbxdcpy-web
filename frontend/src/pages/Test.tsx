@@ -1,6 +1,7 @@
 // import axios from "axios";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import { BACKEND_URL } from "./Login";
 // import { Location } from "react-router-dom";
 
 export default function Test(){
@@ -12,7 +13,7 @@ export default function Test(){
     console.log('Login component mounted, verifying auth');
     const verify = async () => {
       try{
-        const response = await fetch("https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/verify-auth", {credentials: 'include'});
+        const response = await fetch(`${BACKEND_URL}auth/verify-auth`, {credentials: 'include'});
         if(response.ok){
           setIsVerified(true);
           const userData = await response.json();
@@ -33,7 +34,7 @@ export default function Test(){
 
   const logout = async () => {
     try{
-      await fetch('https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/logout', {
+      await fetch(`${BACKEND_URL}auth/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
