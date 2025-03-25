@@ -6,6 +6,7 @@ import Buttons from "./Buttons";
 export const AccountConfig = () => {
   const [discordLinked, setDiscordLinked] = useState(false);
 
+  setDiscordLinked(true);
   return(
     <div className="w-full">
       <div className="w-full h-full p-4 border border-gray-300 shadow-lg rounded-xl overflow-auto relative">
