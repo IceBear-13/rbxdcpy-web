@@ -12,7 +12,7 @@ export default function Test(){
     console.log('Login component mounted, verifying auth');
     const verify = async () => {
       try{
-        const response = await fetch("http://localhost:3000/auth/verify-auth", {credentials: 'include'});
+        const response = await fetch("https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/verify-auth", {credentials: 'include'});
         if(response.ok){
           setIsVerified(true);
           const userData = await response.json();
@@ -33,7 +33,7 @@ export default function Test(){
 
   const logout = async () => {
     try{
-      await fetch('http://localhost:3000/auth/logout', {
+      await fetch('https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {

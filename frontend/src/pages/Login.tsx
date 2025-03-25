@@ -16,7 +16,7 @@ export default function Login() {
     const verify = async () => {
       console.log('verify called once')
       try{
-        const response = await fetch("http://localhost:3000/auth/verify-auth", {credentials: 'include'});
+        const response = await fetch(`https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/verify-auth`, {credentials: 'include'});
         if(response.ok){
           setIsVerified(true);
           sessionStorage.setItem('isVerified', 'true');
@@ -37,7 +37,7 @@ export default function Login() {
     const username = (document.getElementById('uNameLogin') as HTMLInputElement)?.value;
     const password = (document.getElementById('pwdLogin') as HTMLInputElement)?.value;
     console.log(username, password)
-    const response = await fetch('http://localhost:3000/auth/signin', {
+    const response = await fetch('https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/signin', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -108,7 +108,7 @@ export default function Login() {
                     Alternatively sign in with:
                   </div>
                   <li>
-                    <a className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105" href="http://localhost:3000/auth/discord">
+                    <a className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105" href="https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/discord">
                       <img
                         src="discord-logo-512x512.svg"
                         className="size-[30px]"
@@ -160,7 +160,7 @@ export default function Login() {
                     Alternatively sign in with:
                   </div>
                   <li>
-                    <a className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105" href="http://localhost:3000/auth/discord">
+                    <a className="p-1 border border-gray-300 rounded-lg h-full flex items-center hover:bg-gray-300 hover:cursor-pointer transition duration-300 hover:scale-105" href="https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/discord">
                       <img
                         src="discord-logo-512x512.svg"
                         className="size-[30px]"

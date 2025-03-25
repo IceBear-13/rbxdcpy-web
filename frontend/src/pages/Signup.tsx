@@ -9,7 +9,7 @@ export default function Signup() {
   useEffect(() => {
     const verify = async () => {
       try{
-        const response = await fetch("http://localhost:3000/auth/verify-auth", {credentials: 'include'});
+        const response = await fetch("https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/verify-auth", {credentials: 'include'});
         if(response.ok){
           setIsVerified(true);
         } else{
@@ -29,7 +29,7 @@ export default function Signup() {
     const username = (document.getElementById('uName') as HTMLInputElement)?.value;
     const email = (document.getElementById('emailSignup') as HTMLInputElement)?.value;
 
-    const response = await fetch("http://localhost:3000/auth/register", {
+    const response = await fetch("https://rbxdcpy-3p56ov40t-icybeaars-projects.vercel.app/auth/register", {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
