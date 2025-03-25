@@ -1,4 +1,3 @@
-import React from "react";
 import { Header } from "../components/Header";
 import { ProfileSidebar } from "../components/ProfileSidebar";
 import { AccountConfig } from "../components/AccountDashboard";

@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Textbox from "../components/Textbox";
 import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
@@ -8,6 +8,8 @@ import { Navigate } from "react-router-dom";
 export default function Login() {
   
   const [isVerified, setIsVerified] = useState(false);
+
+  console.log(isVerified);
   
   const [wrongCredentials, setWrongCredentials] = useState(false);
   useEffect(()=>{
