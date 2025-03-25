@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Textbox from "../components/Textbox";
 import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 export default function Signup() {
   const [isVerified, setIsVerified] = useState(false);

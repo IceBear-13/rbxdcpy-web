@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 export const ProfileSidebar = () => {
   return(
@@ -6,6 +6,7 @@ export const ProfileSidebar = () => {
       <ul>
         <li><a className="text-[16px]">Account config</a></li>
         <li><a className="text-[16px]">Roblox account</a></li>
+        <li><a className="text-[16px]">Profile config</a></li>
       </ul>
     </div>
   )

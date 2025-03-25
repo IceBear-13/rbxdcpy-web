@@ -1,7 +1,7 @@
-import axios from "axios";
+// import axios from "axios";
 import { useState, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { Location } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+// import { Location } from "react-router-dom";
 
 export default function Test(){
   const [isVerified, setIsVerified] = useState(false);
