@@ -21,6 +21,7 @@ const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET as string;
 const DISCORD_CLIENT_KEY = process.env.DISCORD_CLIENT_KEY as string;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY as string;
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
+const DISCORD_ENDPOINT_URI = process.env.DISCORD_ENDPOINT_URI
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -197,7 +198,7 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
     const code = req.query.code;
     const clientId = DISCORD_CLIENT_KEY;
     const clientSecret = DISCORD_CLIENT_SECRET;
-    const discordRedirectURL = DISCORD_REDIRECT_URL;
+    const discordRedirectURL = DISCORD_ENDPOINT_URI;
 
     console.log(discordRedirectURL);
 
