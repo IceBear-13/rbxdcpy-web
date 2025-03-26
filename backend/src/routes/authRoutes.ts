@@ -196,8 +196,10 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
   try {
     const code = req.query.code;
     const clientId = DISCORD_CLIENT_KEY;
-    const clientSecret = DISCORD_CLIENT_SECRET
-    const discordRedirectURL = DISCORD_REDIRECT_URL
+    const clientSecret = DISCORD_CLIENT_SECRET;
+    const discordRedirectURL = DISCORD_REDIRECT_URL;
+
+    console.log(discordRedirectURL);
 
     if (!clientId || !clientSecret || !discordRedirectURL) {
       throw new Error("Missing Discord OAuth environment variables");
