@@ -21,6 +21,7 @@ const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET as string;
 const DISCORD_CLIENT_KEY = process.env.DISCORD_CLIENT_KEY as string;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY as string;
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
+const DISCORD_ENDPOINT_URI = process.env.DISCORD_ENDPOINT_URI
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -196,10 +197,12 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
   try {
     const code = req.query.code;
     const clientId = DISCORD_CLIENT_KEY;
-    const clientSecret = DISCORD_CLIENT_SECRET
-    const redirectUri = process.env.DISCORD_ENDPOINT_URI as string;
+    const clientSecret = DISCORD_CLIENT_SECRET;
+    const discordRedirectURL = DISCORD_ENDPOINT_URI;
 
-    if (!clientId || !clientSecret || !redirectUri) {
+    console.log(discordRedirectURL);
+
+    if (!clientId || !clientSecret || !discordRedirectURL) {
       throw new Error("Missing Discord OAuth environment variables");
     }
 
@@ -208,7 +211,7 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
       client_secret: clientSecret,
       grant_type: "authorization_code",
       code: code as string,
-      redirect_uri: redirectUri,
+      redirect_uri: discordRedirectURL,
     });
 
     const headers = {
@@ -270,7 +273,7 @@ router.get("/discord/callback", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error: ", error);
     // Provide an error response to the client
-    res.status(500).json({ error: "Authentication failed" });
+    res.status(500).json({ error: error});
   }
 });
 
