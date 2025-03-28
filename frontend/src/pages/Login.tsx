@@ -4,7 +4,7 @@ import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
 import { Navigate } from "react-router-dom";
 
-export const BACKEND_URL = 'http://localhost:3000/';
+export const BACKEND_URL = 'rbxdcpy-api-git-frontend-pt-3-icybeaars-projects.vercel.app';
 
 export default function Login() {
   
