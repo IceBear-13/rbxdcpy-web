@@ -13,7 +13,12 @@ export default function Test(){
     console.log('Login component mounted, verifying auth');
     const verify = async () => {
       try{
-        const response = await fetch(`${BACKEND_URL}auth/verify-auth`, {credentials: 'include'});
+        const response = await fetch(`${BACKEND_URL}auth/verify-auth`, {
+          method: 'POST',
+          body: JSON.stringify({
+            token: localStorage.getItem('token')
+          })
+        });
         if(response.ok){
           setIsVerified(true);
           const userData = await response.json();

@@ -52,9 +52,8 @@ export default function Login() {
     });
     if(response.ok){
       const userData = await response.json();
-      if (userData.token) {
-        document.cookie = `token=${userData.token}; path=/; secure; samesite=strict`;
-      }
+      localStorage.setItem('cookie', `${userData.token}`);
+      document.cookie = `token=${userData.token}; path=/; secure; samesite=none`;
       setIsVerified(true);
       localStorage.setItem('isVerified', 'true');
       localStorage.setItem('userID', userData.user.userId)

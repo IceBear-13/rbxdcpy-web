@@ -26,7 +26,7 @@ const DISCORD_ENDPOINT_URI = process.env.DISCORD_ENDPOINT_URI
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: true,
-  sameSite: 'strict' as const,
+  sameSite: 'none' as const,
   maxAge: 24 * 60 * 60 * 1000, 
   path: '/'
 };
@@ -44,9 +44,9 @@ const COOKIE_OPTIONS = {
  *       401:
  *         description: User is not verified
  */
-router.get('/verify-auth', (req: Request, res: Response) =>{
+router.post('/verify-auth', (req: Request, res: Response) =>{
   // console.log('requested once');
-  const token = req.cookies.token;
+  const { token } = req.body
   // console.log(token);
   if(!token || token === '') res.status(401);
   try{
