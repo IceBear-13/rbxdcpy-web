@@ -53,7 +53,7 @@ export default function Login() {
     if(response.ok){
       const userData = await response.json();
       localStorage.setItem('cookie', `${userData.token}`);
-      document.cookie = `token=${userData.token}; path=/; secure; samesite=none`;
+      document.cookie = `token=${userData.token}; path=/; secure; SameSite=Strict`;
       setIsVerified(true);
       localStorage.setItem('isVerified', 'true');
       localStorage.setItem('userID', userData.user.userId)
