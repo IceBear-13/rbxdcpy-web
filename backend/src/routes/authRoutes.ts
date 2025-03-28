@@ -48,14 +48,16 @@ router.post('/verify-auth', (req: Request, res: Response) =>{
   // console.log('requested once');
   const { token } = req.body
   // console.log(token);
-  if(!token || token === '') res.status(401);
+  if(!token || token === '') {
+    res.status(401).json({ authenticated: false, message: 'No token provided' });
+    return;
+  }
   try{
     const user = jwt.verify(token, JWT_SECRET_KEY);
     res.status(200).json({authenticated: true, user: user});
     // console.log(user);
   } catch(error){
-    res.status(401);
-    throw error;
+    res.status(401).json({ authenticated: false, message: 'Invalid token' });
   }
 })
 /**

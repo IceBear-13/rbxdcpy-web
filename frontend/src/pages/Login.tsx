@@ -52,7 +52,7 @@ export default function Login() {
     });
     if(response.ok){
       const userData = await response.json();
-      localStorage.setItem('cookie', `${userData.token}`);
+      localStorage.setItem('token', `${userData.token}`);
       document.cookie = `token=${userData.token}; path=/; secure; SameSite=Strict`;
       setIsVerified(true);
       localStorage.setItem('isVerified', 'true');

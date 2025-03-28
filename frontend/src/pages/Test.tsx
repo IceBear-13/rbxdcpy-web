@@ -9,32 +9,43 @@ export default function Test(){
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState('');
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('Login component mounted, verifying auth');
+    console.log(localStorage.getItem('token'));
     const verify = async () => {
-      try{
+      try {
         const response = await fetch(`${BACKEND_URL}auth/verify-auth`, {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'  // Add this header
+          },
           body: JSON.stringify({
-            token: localStorage.getItem('token')
+            "token": localStorage.getItem('token')
           })
         });
-        if(response.ok){
-          setIsVerified(true);
+        
+        if (response.ok) {
           const userData = await response.json();
+          setIsVerified(true);
           setUser(userData.user.username);
           localStorage.setItem('isVerified', 'true');
-          setIsLoading(false);
-        } else{
-          window.location.href = "/";
+        } else {
+          setIsVerified(false);
+          localStorage.removeItem('isVerified');
+          // Remove the redirect here and let the component handle it
+          // window.location.href = "/";
         }
-      } catch(error){
+      } catch (error) {
         console.error(error);
         setIsVerified(false);
+        localStorage.removeItem('isVerified');
+      } finally {
+        setIsLoading(false);
       }
     };
+    
     verify();
-  }, [])
+  }, []); 
 
 
   const logout = async () => {
