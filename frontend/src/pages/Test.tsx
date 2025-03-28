@@ -18,7 +18,7 @@ export default function Test(){
           setIsVerified(true);
           const userData = await response.json();
           setUser(userData.user.username);
-          sessionStorage.setItem('isVerified', 'true');
+          localStorage.setItem('isVerified', 'true');
           setIsLoading(false);
         } else{
           window.location.href = "/";
@@ -42,7 +42,7 @@ export default function Test(){
         }
       })
       
-      sessionStorage.removeItem('isVerified');
+      localStorage.removeItem('isVerified');
       setIsVerified(false);
       document.cookie = "token=;"
     } catch(error){

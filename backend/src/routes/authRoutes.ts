@@ -25,7 +25,7 @@ const DISCORD_ENDPOINT_URI = process.env.DISCORD_ENDPOINT_URI
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
+  secure: true,
   sameSite: 'strict' as const,
   maxAge: 24 * 60 * 60 * 1000, 
   path: '/'

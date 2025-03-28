@@ -4,7 +4,7 @@ import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
 import { Navigate } from "react-router-dom";
 
-export const BACKEND_URL = 'https://rbxdcpy-api.vercel.app/';
+export const BACKEND_URL = 'http://localhost:3000/';
 
 export default function Login() {
   
@@ -21,7 +21,8 @@ export default function Login() {
         const response = await fetch(`${BACKEND_URL}auth/verify-auth`, {credentials: 'include'});
         if(response.ok){
           setIsVerified(true);
-          sessionStorage.setItem('isVerified', 'true');
+          localStorage.setItem('isVerified', 'true');
+          console.log(response);
         }
       } catch(error){
         console.error(error);
@@ -55,8 +56,8 @@ export default function Login() {
         document.cookie = `token=${userData.token}; path=/; secure; samesite=strict`;
       }
       setIsVerified(true);
-      sessionStorage.setItem('isVerified', 'true');
-      sessionStorage.setItem('userID', userData.user.userId)
+      localStorage.setItem('isVerified', 'true');
+      localStorage.setItem('userID', userData.user.userId)
       window.location.href = '/test';
     } else{
       setWrongCredentials(true);
@@ -70,7 +71,7 @@ export default function Login() {
     }
   }
 
-  if(sessionStorage.getItem('isVerified') !== 'true'){
+  if(localStorage.getItem('isVerified') !== 'true'){
     if(wrongCredentials){
       return (
       <div className="w-full h-screen flex py-[5%] px-[10%]">

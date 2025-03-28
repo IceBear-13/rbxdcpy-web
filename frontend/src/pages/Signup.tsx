@@ -46,7 +46,8 @@ export default function Signup() {
       setIsVerified(true);
       const userData = await response.json();
       document.cookie = `token=${userData.token}; path=/; secure; samesite=strict`
-      sessionStorage.setItem('isVerified', 'true');
+      localStorage.setItem('isVerified', 'true');
+      localStorage.setItem('userID', userData.userId);
       window.location.href = '/test'
     }
   }
