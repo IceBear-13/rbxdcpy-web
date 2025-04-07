@@ -59,8 +59,11 @@ export default function Test(){
       })
       
       localStorage.removeItem('isVerified');
+      localStorage.removeItem('token');
+      localStorage.removeItem('userID');
       setIsVerified(false);
       document.cookie = "token=;"
+      
     } catch(error){
       console.error(error);
     }
