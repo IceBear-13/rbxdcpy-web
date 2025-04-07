@@ -4,7 +4,7 @@ import Passwordbox from "../components/Password";
 import Buttons from "../components/Buttons";
 import { Navigate, useNavigate } from "react-router-dom";
 
-export const BACKEND_URL = 'http://localhost:3000/';
+export const BACKEND_URL = 'https://rbxdcpy-api.vercel.app/';
 
 export default function Login() {
   const [isVerified, setIsVerified] = useState(false);
